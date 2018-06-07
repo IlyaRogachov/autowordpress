@@ -1,0 +1,14 @@
+- name: Allow everything and enable UFW
+  ufw:
+    state: enabled
+    policy: allow
+
+- name: Set logging
+  ufw:
+    logging: on
+
+- name: Run expect to wait for a successful PXE boot via out-of-band CIMC
+  shell: |
+       sudo ufw default deny incoming
+       sudo ufw allow 22
+       sudo ufw allow from 192.168.65.41 to any port 3306
