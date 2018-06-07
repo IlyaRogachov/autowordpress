@@ -13,16 +13,16 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>#!/bin/sh
-rm -rf /tmp/wordpress/
-cd /tmp/ &amp;&amp; git clone https://github.com/IlyaRogachov/wordpress.git
-sudo chmod 644 /home/vagrant/server_ca
-ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.41 &apos;rm -rf /tmp/wordpress&apos;
-scp -rp -o StrictHostKeyChecking=no -i /home/vagrant/server_ca /tmp/wordpress root@192.168.56.41:/tmp/
-ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.41 &apos;rm -rf /tmp/backup &amp;&amp; mkdir -p /tmp/backup &amp;&amp; mv /var/www/mywordpress.com/* /tmp/backup/ &amp;&amp; cp -rp /tmp/wordpress/* /var/www/mywordpress.com/&apos;
-ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.42 &apos;rm -rf /tmp/wordpress/*&apos;
-scp -o StrictHostKeyChecking=no -i /home/vagrant/server_ca /tmp/wordpress/wordpressnew.dmp root@192.168.56.42:/tmp/wordpressnew.dmp 
-ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.42 &apos;rm -rf /tmp/backup &amp;&amp; mkdir -p /tmp/backup &amp;&amp; /usr/bin/mysqldump wordpress &gt; /tmp/backup/wordpress.dump &amp;&amp; /usr/bin/mysql wordpress &lt; /tmp/wordpressnew.dmp&apos;
+      <command>#!/bin/bash
+sudo rm -rf /home/docker/repo/HelloWorld*.jar
+sudo cp /var/lib/jenkins/workspace/Build/target/HelloWorld*.jar /home/docker/repo/
+sudo docker build --no-cache -t hello/world /home/docker/repo/
+sudo  docker tag hello/world myreg.com:5000/hello:1
+sudo  docker push myreg.com:5000/hello:1
+ssh -o StrictHostKeyChecking=no -i ~/server_ca vagrant@192.168.56.81 &lt;&lt; EOF
+sudo  helm delete helloworld --purge
+sudo  helm install /home/helm/helloworld/. --name=helloworld
+EOF
 </command>
     </hudson.tasks.Shell>
   </builders>

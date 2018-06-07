@@ -11,4 +11,4 @@
   shell: |
        sudo ufw default deny incoming
        sudo ufw allow 22
-       sudo ufw allow from 192.168.65.41 to any port 3306
+       sudo ufw allow from 192.168.56.41 to any port 3306
