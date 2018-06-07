@@ -1,0 +1,31 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/sh
+rm -rf /tmp/wordpress/
+cd /tmp/ &amp;&amp; git clone https://github.com/IlyaRogachov/wordpress.git
+sudo chmod 644 /home/vagrant/server_ca
+ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.41 &apos;rm -rf /tmp/wordpress&apos;
+scp -rp -o StrictHostKeyChecking=no -i /home/vagrant/server_ca /tmp/wordpress root@192.168.56.41:/tmp/
+ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.41 &apos;rm -rf /tmp/backup &amp;&amp; mkdir -p /tmp/backup &amp;&amp; mv /var/www/mywordpress.com/* /tmp/backup/ &amp;&amp; cp -rp /tmp/wordpress/* /var/www/mywordpress.com/&apos;
+ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.42 &apos;rm -rf /tmp/wordpress/*&apos;
+scp -o StrictHostKeyChecking=no -i /home/vagrant/server_ca /tmp/wordpress/wordpressnew.dmp root@192.168.56.42:/tmp/wordpressnew.dmp 
+ssh -o StrictHostKeyChecking=no -i /home/vagrant/server_ca root@192.168.56.42 &apos;rm -rf /tmp/backup &amp;&amp; mkdir -p /tmp/backup &amp;&amp; /usr/bin/mysqldump wordpress &gt; /tmp/backup/wordpress.dump &amp;&amp; /usr/bin/mysql wordpress &lt; /tmp/wordpressnew.dmp&apos;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

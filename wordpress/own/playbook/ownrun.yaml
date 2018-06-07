@@ -1,0 +1,18 @@
+- hosts: mysql 
+  user: root
+  sudo: yes
+  roles:
+         - mysql
+
+- hosts: wordpress
+  user: root
+  sudo: yes
+  roles:
+        - php
+        - nginx
+
+- hosts: jenkins
+  vars:
+  roles:
+        - ansible-java
+        - jenkins

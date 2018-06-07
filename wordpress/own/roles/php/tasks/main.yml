@@ -1,0 +1,28 @@
+- name: install php7
+  apt: pkg={{ item }}
+  with_items:
+    - php-fpm
+    - php-mysql
+
+- name: Creates directory wordpress
+  file:
+    path: /var/www/mywordpress.com
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0775
+
+
+- copy:
+    src: "{{ role_path }}/files/wordpress/"
+    dest: /var/www/mywordpress.com/
+    owner: www-data
+    group: www-data
+    mode: 0755
+
+      #- name: change listen socket
+      #  lineinfile:
+      #    dest: '/etc/php7/fpm/pool.d/www.conf'
+      #    insertafter: 'listen = 127.0.0.1:9000'
+      #    line: 'listen = /var/run/fpm.socket'
+      #  notify: restart php7-fpm

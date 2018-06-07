@@ -1,0 +1,23 @@
+Stack has run.sh script for full installation of system to virtualbox vm's
+All vm's can be removed using "vagrant destroy $(vagrant status | grep vmware_fusion | grep -v "not created" | awk "{ print \$1 }")" command
+which should be runned on Vagrantfile directory
+
+----------------------------------------------------
+
+Versions and system used for run:
+
+Ubuntu 17.10
+
+VBoxManage --version
+5.1.34_Ubuntur121010
+
+vagrant -v
+Vagrant 2.0.4
+
+---------------------------------------------------
+
+/etc/hosts file should present records for domains
+
+192.168.56.41 mywordpress.com
+http://192.168.56.43:8080    - jenkins just run Deploy and than Rollback job ( Jenkins has already created build, deploy jobs and installed plugins. In a case jenkins would ask finish registration you need just copy secret key from server.
+You do not need to install jenkins plugins, just select "none plugins" and skip this step ) 
