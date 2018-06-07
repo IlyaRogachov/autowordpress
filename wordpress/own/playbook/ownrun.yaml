@@ -16,5 +16,5 @@
 - hosts: jenkins
   vars:
   roles:
-        - ansible-java
+        - java
         - jenkins
