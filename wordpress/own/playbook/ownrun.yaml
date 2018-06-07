@@ -1,17 +1,17 @@
-#- hosts: mysql 
-#  user: root
-#  sudo: yes
-#  roles:
-#         - mysql
-#         - ufwbackend
+- hosts: mysql 
+  user: root
+  sudo: yes
+  roles:
+         - mysql
+         - ufwbackend
 
-#- hosts: wordpress
-#  user: root
-#  sudo: yes
-#  roles:
-#        - php
-#        - nginx
-#        - ufwfront
+- hosts: wordpress
+  user: root
+  sudo: yes
+  roles:
+        - php
+        - nginx
+        - ufwfront
 
 - hosts: jenkins
   vars:
